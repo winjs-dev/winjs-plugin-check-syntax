@@ -120,29 +120,35 @@ export default (api: IApi) => {
   });
 
   // 增加检测 html 文件类型的功能
-  api.onBuildHtmlComplete(async (html: any) => {
-    const htmlFiles = html?.htmlFiles || [];
-    if (api.env === 'development' || htmlFiles.length === 0) {
-      return;
-    }
+  api.onBuildHtmlComplete(
+    async (html: { htmlFiles?: Array<{ path: string }> }) => {
+      const htmlFiles = html?.htmlFiles || [];
+      if (api.env === 'development' || htmlFiles.length === 0) {
+        return;
+      }
 
-    const targets = api.config.targets;
-    const checkerOptions = getCheckSyntaxOptions(targets);
-    const checker = new CheckSyntax({
-      rootPath: api.paths.absOutputPath,
-      ecmaVersion: 2015 as const, // 默认ES2015
-      ...checkerOptions,
-    });
+      const targets = api.config.targets;
+      const checkerOptions = getCheckSyntaxOptions(targets);
+      const checker = new CheckSyntax({
+        rootPath: api.paths.absOutputPath,
+        ecmaVersion: 2015 as const, // 默认ES2015
+        ...checkerOptions,
+      });
 
-    // 获取 dist 目录下的所有 html 文件
-    // 遍历 html 文件，检测是否存在语法错误
-    for (const htmlFile of htmlFiles) {
-      const htmlFilePath = winPath(
-        join(api.paths.absOutputPath, htmlFile.path),
+      // 获取 dist 目录下的所有 html 文件
+      // 遍历 html 文件，检测是否存在语法错误
+      for (const htmlFile of htmlFiles) {
+        const htmlFilePath = winPath(
+          join(api.paths.absOutputPath, htmlFile.path),
+        );
+        await checker.check(htmlFilePath);
+      }
+
+      printErrors(
+        checker.errors,
+        checker.ecmaVersion,
+        checker.excludeErrorLogs,
       );
-      await checker.check(htmlFilePath);
-    }
-
-    printErrors(checker.errors, checker.ecmaVersion, checker.excludeErrorLogs);
-  });
+    },
+  );
 };
