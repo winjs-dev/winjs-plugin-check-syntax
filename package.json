@@ -1,7 +1,8 @@
 {
-  "name": "winjs-plugin-example",
+  "name": "@winner-fed/plugin-check-syntax",
   "version": "0.0.0",
-  "repository": "https://github.com/winjs-dev/winjs-plugin-template",
+  "description": "WinJS plugin for checking ECMAScript syntax compatibility",
+  "repository": "https://github.com/winjs-dev/winjs-plugin-check-syntax",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -30,18 +31,21 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@playwright/test": "^1.49.0",
-    "@winner-fed/winjs": "^0.11.21",
-    "@winner-fed/utils": "^0.11.21",
+    "@winner-fed/winjs": "^0.15.0",
+    "@winner-fed/utils": "^0.15.0",
     "@rslib/core": "^0.1.1",
     "@types/node": "^22.10.1",
     "playwright": "^1.49.0",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.2"
   },
+  "dependencies": {
+    "@winner-fed/unplugin-check-syntax": "^1.0.0"
+  },
   "peerDependencies": {
     "@rsbuild/core": "1.x",
-    "@winner-fed/winjs": "^0.11.21",
-    "@winner-fed/utils": "^0.11.21"
+    "@winner-fed/winjs": "^0.15.0",
+    "@winner-fed/utils": "^0.15.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
