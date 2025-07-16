@@ -1,10 +1,11 @@
+import { join } from 'node:path';
 import type { CheckSyntaxOptions } from '@winner-fed/unplugin-check-syntax';
+import { CheckSyntax, printErrors } from '@winner-fed/unplugin-check-syntax';
 import checkSyntaxRspack from '@winner-fed/unplugin-check-syntax/rspack';
 import checkSyntaxVite from '@winner-fed/unplugin-check-syntax/vite';
 import checkSyntaxWebpack from '@winner-fed/unplugin-check-syntax/webpack';
+import { winPath } from '@winner-fed/utils';
 import type { IApi } from '@winner-fed/winjs';
-
-export type CheckSyntax = boolean | CheckSyntaxOptions;
 
 export default (api: IApi) => {
   api.describe({
@@ -116,5 +117,32 @@ export default (api: IApi) => {
       }),
     ]);
     return config;
+  });
+
+  // 增加检测 html 文件类型的功能
+  api.onBuildHtmlComplete(async (html: any) => {
+    const htmlFiles = html?.htmlFiles || [];
+    if (api.env === 'development' || htmlFiles.length === 0) {
+      return;
+    }
+
+    const targets = api.config.targets;
+    const checkerOptions = getCheckSyntaxOptions(targets);
+    const checker = new CheckSyntax({
+      rootPath: api.paths.absOutputPath,
+      ecmaVersion: 2015 as const, // 默认ES2015
+      ...checkerOptions,
+    });
+
+    // 获取 dist 目录下的所有 html 文件
+    // 遍历 html 文件，检测是否存在语法错误
+    for (const htmlFile of htmlFiles) {
+      const htmlFilePath = winPath(
+        join(api.paths.absOutputPath, htmlFile.path),
+      );
+      await checker.check(htmlFilePath);
+    }
+
+    printErrors(checker.errors, checker.ecmaVersion, checker.excludeErrorLogs);
   });
 };

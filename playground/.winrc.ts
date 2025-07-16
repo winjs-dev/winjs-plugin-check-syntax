@@ -11,5 +11,5 @@ export default defineConfig({
   checkSyntax: {
     ecmaVersion: 5, // 只配置 ecmaVersion，targets 应该使用默认值
   },
-  rsbuild: {},
+  // rsbuild: {},
 });

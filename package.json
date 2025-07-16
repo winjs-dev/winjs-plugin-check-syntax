@@ -40,7 +40,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@winner-fed/unplugin-check-syntax": "^1.0.0"
+    "@winner-fed/unplugin-check-syntax": "^1.0.1"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x",
