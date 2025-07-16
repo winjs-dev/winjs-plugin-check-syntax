@@ -1,6 +1,6 @@
 {
   "name": "@winner-fed/plugin-check-syntax",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "WinJS plugin for checking ECMAScript syntax compatibility",
   "repository": "https://github.com/winjs-dev/winjs-plugin-check-syntax",
   "license": "MIT",
