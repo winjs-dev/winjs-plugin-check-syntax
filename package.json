@@ -23,29 +23,30 @@
     "lint:write": "biome check . --write",
     "prepare": "simple-git-hooks && npm run build",
     "test": "playwright test",
-    "bump": "npx bumpp"
+    "bump": "bumpp"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint:write"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@playwright/test": "^1.49.0",
-    "@winner-fed/winjs": "^0.15.0",
-    "@winner-fed/utils": "^0.15.0",
-    "@rslib/core": "^0.1.1",
-    "@types/node": "^22.10.1",
-    "playwright": "^1.49.0",
-    "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.7.2"
+    "@biomejs/biome": "^2.1.1",
+    "@playwright/test": "^1.53.2",
+    "@rsbuild/core": "^1.4.2",
+    "@rslib/core": "^0.10.4",
+    "@types/node": "^22.15.34",
+    "@winner-fed/winjs": "*",
+    "bumpp": "10.2.3",
+    "simple-git-hooks": "^2.13.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@winner-fed/unplugin-check-syntax": "^1.0.1"
   },
+  "peerDevDependencies": {
+    "@winner-fed/winjs": "*"
+  },
   "peerDependencies": {
-    "@rsbuild/core": "1.x",
-    "@winner-fed/winjs": "^0.15.0",
-    "@winner-fed/utils": "^0.15.0"
+    "@winner-fed/utils": "*"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
@@ -55,7 +56,6 @@
       "optional": true
     }
   },
-  "packageManager": "pnpm@9.14.4",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
